@@ -15,14 +15,51 @@ import javax.swing.JButton;
  * @author xp
  */
 public class VentanaAhorcado extends javax.swing.JFrame {
+    
+    
+    
+    String palabraOculta = "CETYS";
+    
+    int numeroFallos = 0;
+    
+    public void chequeaLetra(String letra){
+        letra = letra.toUpperCase();//convierto la letra a mayúscula
+        palabraOculta = palabraOculta.toUpperCase();
+        
+        String palabraConGuiones = panelGuiones.getText();
+        if(palabraOculta.contains(letra)){
+           for (int i=0; i < palabraOculta.length(); i++){
+               if(palabraOculta.charAt(i) == letra.charAt(0)){
+                   palabraConGuiones = palabraConGuiones.substring(0,2+i)
+                           + letra
+                           + palabraConGuiones.substring(2*i+1);
+               }
+           } 
+           panelGuiones.setText(palabraConGuiones);
+        }else{
+            numeroFallos++;
+                    dibujaImagen(numeroFallos);
+        }
+        
+    }
 
     public void chequeaBoton(JButton miBoton) {
         miBoton.setEnabled(false);
-        System.out.println(miBoton.getText());
+        chequeaLetra(miBoton.getText());
     }
     private void dibujaImagen(int numeroImagen){
-        URL nombreImagen = getClass()
-                .getResource("/imagenes/ahorcado_0.png");
+        URL nombreImagen = null;
+        switch (numeroImagen){
+            case 0 : nombreImagen = getClass().getResource("/imagenes/ahorcado_0.png");break;
+            case 1 : nombreImagen = getClass().getResource("/imagenes/ahorcado_1.png");break;
+            case 2 : nombreImagen = getClass().getResource("/imagenes/ahorcado_2.png");break;
+            case 3 : nombreImagen = getClass().getResource("/imagenes/ahorcado_3.png");break;
+            case 4 : nombreImagen = getClass().getResource("/imagenes/ahorcado_4.png");break;
+            case 5 : nombreImagen = getClass().getResource("/imagenes/ahorcado_5.png");break;
+            case 6 : nombreImagen = getClass().getResource("/imagenes/ahorcado_fin.png");break;
+            default : nombreImagen = getClass().getResource("/imagenes/ahorcado_fin.png");break;
+        }
+
         ImageIcon miImagen = new ImageIcon(new ImageIcon(nombreImagen).getImage().getScaledInstance(panelAhorcado.getWidth(), panelAhorcado.getHeight(), Image.SCALE_DEFAULT));
         panelAhorcado.setIcon(miImagen);
         
@@ -42,7 +79,7 @@ public class VentanaAhorcado extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        panelGuiones = new javax.swing.JLabel();
         panelAhorcado = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -75,10 +112,10 @@ public class VentanaAhorcado extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("_ _ _ _ _");
-        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        panelGuiones.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        panelGuiones.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        panelGuiones.setText("_ _ _ _ _");
+        panelGuiones.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         panelAhorcado.setText("jLabel2");
 
@@ -313,7 +350,7 @@ public class VentanaAhorcado extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(panelGuiones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(63, 63, 63)
                         .addComponent(panelAhorcado, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -383,7 +420,7 @@ public class VentanaAhorcado extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelGuiones, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(panelAhorcado, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -604,7 +641,7 @@ public class VentanaAhorcado extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel panelAhorcado;
+    private javax.swing.JLabel panelGuiones;
     // End of variables declaration//GEN-END:variables
 }
